@@ -8,7 +8,7 @@ Slic3r [PrintConfig.cpp](https://github.com/alexrj/Slic3r/blob/c12ccd8357cd3464e
 
 | Slic3r                            | Cura                                                                 | example values                                                | notes     |
 | --------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------- | --------- |
-| max_fan_speed                     | (fan_speed_max) ? 100 : 0                                            | True -> 100                                                   |           |
+| max_fan_speed                     | fan_speed_max\*100                                                   | 1 -> 100                                                      |           |
 | fan_always_on                     | (fan_speed) ? 1 : 0                                                  | False -> 0                                                    |           |
 | min_fan_speed                     | (fan_enabled) ? 100 : 0                                              | True -> 100                                                   |           |
 | bridge_fan_speed                  | (fan_enabled) ? 100 : 0                                              | True -> 100                                                   |           |
