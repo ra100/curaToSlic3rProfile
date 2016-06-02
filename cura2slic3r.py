@@ -7,7 +7,7 @@ from ConfigParser import SafeConfigParser
 
 def max_fan_speed(i, p, o):
     if i.isdigit():
-        return int(float(i) * 100)
+        return int(float(i) * 100 / 255)
     else:
         return 0
 
