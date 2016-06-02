@@ -52,7 +52,6 @@ Slic3r [PrintConfig.cpp](https://github.com/alexrj/Slic3r/blob/c12ccd8357cd3464e
 | temperature                       | print_temperature                                                    | 0                                                             |           |
 | bed_temperature                   | (has_heated_bed) ? print_bed_temperature : 0                         | 60                                                            |           |
 | bed_shape                         | 0x0, machine_widthx0, machine_depthxmachine_height, 0xmachine_height |                                                               | not used  |
-| bed_size                          | machine_width,machine_depth                                          |                                                               | not used  |
 | perimeters                        | int(wall_thickness / layer_height)                                   | 3                                                             |           |
 | extruder_offset                   | extruder_offset_x1xextruder_offset_y1                                | 0x0                                                           |           |
 
