@@ -342,6 +342,8 @@ def main():
     args = parser.parse_args()
     curaFile = args.cura
     slic3rFile = args.slic3r
+    if slic3rFile == None:
+        slic3rFile = curaFile + '.slic3r.ini'
 
     cura = SafeConfigParser()
     cura.read(curaFile)
