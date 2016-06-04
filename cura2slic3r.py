@@ -138,6 +138,11 @@ def perimeters(i, p, o):
 def extruder_offset(i, p, o):
     return '{0!s}x{1!s}'.format(i, p['extruder_offset_y1'])
 
+
+def first_layer_speed(i, p, o):
+    return str(int((float(i) / float(p['print_speed'])) * 100)) + "%"
+
+
 c2s = [
     {'src': 'fan_speed_max', 'dest': 'max_fan_speed',
         'default': 100, 'conv': max_fan_speed},
@@ -214,8 +219,8 @@ c2s = [
         'default': 1, 'conv': extrusion_multiplier},
     {'src': 'insetx_speed', 'dest': 'solid_infill_speed',
         'default': 20},
-    {'src': 'inset0_speed', 'dest': 'first_layer_speed',
-        'default': 30},
+    {'src': 'bottom_layer_speed', 'dest': 'first_layer_speed',
+        'default': "60%", 'conv': first_layer_speed},
     {'src': 'print_temperature', 'dest': 'temperature',
         'default': 0},
     {'src': 'has_heated_bed', 'dest': 'bed_temperature',
@@ -240,7 +245,6 @@ c2s = [
     {'src': 'NA', 'dest': 'first_layer_acceleration', 'default': 0},
     {'src': 'NA', 'dest': 'first_layer_bed_temperature', 'default': 0},
     {'src': 'NA', 'dest': 'first_layer_height', 'default': '100%'},
-    {'src': 'NA', 'dest': 'first_layer_speed', 'default': "30%"},
     {'src': 'NA', 'dest': 'first_layer_temperature', 'default': 0},
     {'src': 'NA', 'dest': 'retract_layer_change', 'default': 1},
     {'src': 'NA', 'dest': 'retract_length_toolchange', 'default': 3},
@@ -284,7 +288,8 @@ c2s = [
     {'src': 'NA', 'dest': 'interface_shells', 'default': 0},
     {'src': 'NA', 'dest': 'layer_gcode', 'default': ''},
     {'src': 'NA', 'dest': 'only_retract_when_crossing_perimeters', 'default': 0},
-    {'src': 'NA', 'dest': 'output_filename_format', 'default': '[input_filename_base].gcode'},
+    {'src': 'NA', 'dest': 'output_filename_format',
+        'default': '[input_filename_base].gcode'},
     {'src': 'NA', 'dest': 'overhangs', 'default': 1},
     {'src': 'NA', 'dest': 'perimeter_acceleration', 'default': 0},
     {'src': 'NA', 'dest': 'perimeter_extruder', 'default': 1},
@@ -342,19 +347,23 @@ def main():
     args = parser.parse_args()
     curaFile = args.cura
     slic3rFile = args.slic3r
-    if slic3rFile == None:
-        slic3rFile = curaFile + '.slic3r.ini'
 
     cura = SafeConfigParser()
     cura.read(curaFile)
     slic3r = convert(cura._sections['profile'])
     srt = collections.OrderedDict(sorted(slic3r.items()))
-    with open(slic3rFile, 'w') as cf:
-        cf.write(
-            '# Slic3r profile converted from Cura {0!s}\n'.format(curaFile))
+    #When output is not specified, print profile to stdout
+    if slic3rFile == None:
+        print('# Slic3r profile converted from Cura {0!s}\n'.format(curaFile))
         for k in srt:
-            cf.write("{0!s} = {1!s}\n".format(k, slic3r[k]))
-    print('Profile has been converted.')
+            print("{0!s} = {1!s}".format(k, slic3r[k]))
+    else:
+        with open(slic3rFile, 'w') as cf:
+            cf.write(
+                '# Slic3r profile converted from Cura {0!s}\n'.format(curaFile))
+            for k in srt:
+                cf.write("{0!s} = {1!s}\n".format(k, slic3r[k]))
+        print('Profile has been converted.')
 
 if __name__ == "__main__":
     main()
