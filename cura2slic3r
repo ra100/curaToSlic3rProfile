@@ -1,0 +1,4 @@
+#!/usr/bin/env python
+import package.cura2slic3r
+
+package.cura2slic3r.main()

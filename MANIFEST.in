@@ -1,0 +1,2 @@
+include cura2slic3r README
+recursive-include package *.py
