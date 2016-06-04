@@ -83,11 +83,15 @@ def brim_width(i, p, o):
 
 def bottom_solid_layers(i, p, o):
     if i == 'True':
-        thick = float(p['bottom_thickness'])
+        thick = float(p['solid_layer_thickness'])
         height = float(p['layer_height'])
         return int(round(thick / height))
     else:
         return 0
+
+
+def first_layer_height(i, p, o):
+    return str(int(float(p['bottom_thickness']) / float(p['layer_height']) * 100)) + "%"
 
 
 def top_solid_layers(i, p, o):
@@ -221,6 +225,8 @@ c2s = [
         'default': 20},
     {'src': 'bottom_layer_speed', 'dest': 'first_layer_speed',
         'default': "60%", 'conv': first_layer_speed},
+    {'src': 'bottom_thickness', 'dest': 'first_layer_height', 'default': '100%',
+        'conv': first_layer_height},
     {'src': 'print_temperature', 'dest': 'temperature',
         'default': 0},
     {'src': 'has_heated_bed', 'dest': 'bed_temperature',
@@ -244,7 +250,6 @@ c2s = [
     {'src': 'NA', 'dest': 'skirt_height', 'default': 1},
     {'src': 'NA', 'dest': 'first_layer_acceleration', 'default': 0},
     {'src': 'NA', 'dest': 'first_layer_bed_temperature', 'default': 0},
-    {'src': 'NA', 'dest': 'first_layer_height', 'default': '100%'},
     {'src': 'NA', 'dest': 'first_layer_temperature', 'default': 0},
     {'src': 'NA', 'dest': 'retract_layer_change', 'default': 1},
     {'src': 'NA', 'dest': 'retract_length_toolchange', 'default': 3},
