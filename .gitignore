@@ -1,1 +1,10 @@
 .tags*
+.pypirc
+*.pyc
+*~
+GPATH
+GRTAGS
+GTAGS
+cura2slic3r.egg-info
+build
+dist

@@ -1,2 +1,2 @@
-include cura2slic3r README
+include cura2slic3r README LICENSE
 recursive-include package *.py
