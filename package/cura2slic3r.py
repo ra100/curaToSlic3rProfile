@@ -209,7 +209,7 @@ c2s = [
         'default': 1.75},
     {'src': 'print_speed', 'dest': 'max_print_speed',
         'default': 80, 'conv': max_print_speed},
-    {'src': 'min_print_speed', 'dest': 'max_print_speed',
+    {'src': 'min_print_speed', 'dest': 'min_print_speed',
         'default': 10, 'conv': min_print_speed},
     {'src': 'spiralize', 'dest': 'spiral_vase',
         'default': 0, 'conv': bool_to_int},
