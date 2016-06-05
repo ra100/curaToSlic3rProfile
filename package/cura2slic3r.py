@@ -309,7 +309,6 @@ c2s = [
     {'src': 'NA', 'dest': 'solid_infill_extruder', 'default': 1},
     {'src': 'NA', 'dest': 'solid_infill_extrusion_width', 'default': 0},
     {'src': 'NA', 'dest': 'standby_temperature_delta', 'default': '-5'},
-    {'src': 'NA', 'dest': 'threads', 'default': 2},
     {'src': 'NA', 'dest': 'toolchange_gcode', 'default': ''},
     {'src': 'NA', 'dest': 'use_firmware_retraction', 'default': 0},
     {'src': 'NA', 'dest': 'use_relative_e_distances', 'default': 0},
