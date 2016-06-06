@@ -136,7 +136,10 @@ def bed_shape(i, p, o):
 
 
 def perimeters(i, p, o):
-    return int(round(float(i) / float(p['layer_height'])))
+    perimeter_width = float(p['nozzle_size'])
+    if (p['perimeter_extrusion_width'] != None):
+        perimeter_width = float(p['perimeter_extrusion_width'])
+    return int(round(float(i) / perimeter_width))
 
 
 def extruder_offset(i, p, o):
