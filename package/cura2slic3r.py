@@ -136,8 +136,8 @@ def bed_shape(i, p, o):
 
 
 def perimeters(i, p, o):
-    perimeter_width = float(p['nozzle_size'])
-    if (p['perimeter_extrusion_width'] != None):
+    perimeter_width = float(o['nozzle_diameter'])
+    if 'perimeter_extrusion_width' in o:
         perimeter_width = float(p['perimeter_extrusion_width'])
     return int(round(float(i) / perimeter_width))
 
@@ -347,30 +347,36 @@ def main():
     '''main function'''
     parser = argparse.ArgumentParser(
         description='''Convert Cura slicing profile to Slic3r''')
-    parser.add_argument('cura', metavar='INPUT', type=str,
+    parser.add_argument('cura', metavar='INPUT', type=str, nargs='*',
                         help='Cura input profile file')
-    parser.add_argument('slic3r', metavar='OUTPUT', type=str, nargs='?',
+    parser.add_argument('-o', '--out', metavar='OUTPUT', dest='slic3r', type=str, nargs='?',
                         help='Slic3r output profile file')
+    parser.add_argument('-d', '--dest', dest='dest', type=str,
+                        help='Set destination folder, eg. ../dest/')
     args = parser.parse_args()
-    curaFile = args.cura
+    curaFiles = args.cura
     slic3rFile = args.slic3r
+    dest = args.dest
 
-    cura = SafeConfigParser()
-    cura.read(curaFile)
-    slic3r = convert(cura._sections['profile'])
-    srt = collections.OrderedDict(sorted(slic3r.items()))
-    #When output is not specified, print profile to stdout
-    if slic3rFile == None:
-        print('# Slic3r profile converted from Cura {0!s}\n'.format(curaFile))
-        for k in srt:
-            print("{0!s} = {1!s}".format(k, slic3r[k]))
-    else:
-        with open(slic3rFile, 'w') as cf:
-            cf.write(
-                '# Slic3r profile converted from Cura {0!s}\n'.format(curaFile))
+    for f in curaFiles:
+        cura = SafeConfigParser()
+        cura.read(curaFiles)
+        slic3r = convert(cura._sections['profile'])
+        srt = collections.OrderedDict(sorted(slic3r.items()))
+        #When output is not specified, print profile to stdout
+        if slic3rFile == None and dest == None:
+            print('# Slic3r profile converted from Cura {0!s}\n'.format(f))
             for k in srt:
-                cf.write("{0!s} = {1!s}\n".format(k, slic3r[k]))
-        print('Profile has been converted.')
+                print("{0!s} = {1!s}".format(k, slic3r[k]))
+        else:
+            if dest != None:
+                slic3rFile = dest + f
+            with open(slic3rFile, 'w') as cf:
+                cf.write(
+                    '# Slic3r profile converted from Cura {0!s}\n'.format(f))
+                for k in srt:
+                    cf.write("{0!s} = {1!s}\n".format(k, slic3r[k]))
+            print('Profile has been converted.')
 
 if __name__ == "__main__":
     main()

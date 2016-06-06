@@ -20,6 +20,20 @@ pip install git+https://github.com/ra100/curaToSlic3rProfile
 
 ## Usage
 
+Simple, just output to stdout
+
 ```bash
-cura2slic3r cura.ini slic3r.ini
+cura2slic3r cura.ini
+```
+
+Output to file
+
+```bash
+cura2slic3r cura.ini -o slic3r.ini
+```
+
+Batch process and output to folder
+
+```bash
+cura2slic3r *.ini -d ../dest/
 ```
